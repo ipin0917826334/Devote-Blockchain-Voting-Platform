@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  bootnode:
+    image: ethereum-geth-arm
+    command: bootnode -nodekey /data/bnode/boot.key -verbosity 7 -addr "0.0.0.0:30301"
+    # volumes:
+    #   - ./Devote_Private_Blockchain/bnode/data:/data
+    ports:
+      - "30301:30301"
+    networks:
+      - gethnet
+
+  node1:
+    image: ethereum-geth-arm
+    command: >
+      geth --networkid 1337 --datadir /data/node1/data --bootnodes enode://c5805208cba1d782943828f488f09b58528d7688da5fdcb6aa48dd1392bac9517f902989a2c7a5ce5eb0856313d7f72186519bf048385a05024010190dbf42b3@bootnode:30301
+      --port 30303 --targetgaslimit "120000000000" --ipcdisable --syncmode full --http --allow-insecure-unlock
+      --http.corsdomain "*" --http.addr 0.0.0.0 --http.port 8545 --http.api eth,net,web3 --http.vhosts=* --unlock 0x560fcF117dE71F45A917dE4e5547D2E23418e06a --password /data/node1/password.txt --mine
+    # volumes:
+    #   - ./Devote_Private_Blockchain/node1/data:/data
+    ports:
+      - "30303:30303"
+      - "8545:8545"
+    depends_on:
+      - bootnode
+    networks:
+      - gethnet
+
+  node2:
+    image: ethereum-geth-arm
+    command: >
+      geth --networkid 1337 --datadir /data/node2/data --bootnodes enode://c5805208cba1d782943828f488f09b58528d7688da5fdcb6aa48dd1392bac9517f902989a2c7a5ce5eb0856313d7f72186519bf048385a05024010190dbf42b3@bootnode:30301
+      --port 30304 --targetgaslimit "120000000000" --ipcdisable --syncmode full --http --allow-insecure-unlock
+      --http.corsdomain "*" --http.addr 0.0.0.0 --http.port 8546 --http.api eth,net,web3 --http.vhosts=* --unlock 0x8c889EF8E96cE778a350CF11f0A0faa18B7DCF62 --password /data/node2/password.txt
+    # volumes:
+    #   - ./Devote_Private_Blockchain/node2/data:/data
+    ports:
+      - "30304:30304"
+      - "8546:8546"
+    depends_on:
+      - bootnode
+    networks:
+      - gethnet
+
+  devote_backend:
+    image: devote_backend
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/devote
+      - WEB3_URI=http://node1:8545
+      - EMAIL_HOST= # Enter Email server host
+      - JWT_SECRET=  # Enter JWT secret key
+      - EMAIL_PORT= # Enter Email server port 
+      - EMAIL_SECURE=false
+      - EMAIL_USER= # Enter Email 
+      - EMAIL_PASS= # If use gmail it should use App password generate from gmail
+    depends_on:
+      - mongo
+      - node1
+    networks:
+      - gethnet
+
+  devote_frontend:
+    image: devote_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_BACKEND_URL=http://localhost:3001
+    depends_on:
+      - devote_backend
+    networks:
+      - gethnet
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=devote
+    networks:
+      - gethnet
+  
+networks:
+  gethnet:
+    driver: bridge

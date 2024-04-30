@@ -1,0 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #DEE9EF;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.font-\[\'Inconsolata\'\] {
+  font-family: "Inconsolata";
+}
+
+.font-\[\'Junge\'\] {
+  font-family: "Junge";
+}
+
+.font-junge {
+  font-family: Junge !important;
+}
+
+.font-inconsolata {
+  font-family: Inconsolata;
+}
+
+.bg-\[\#36ABD1\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(54 171 209 / var(--tw-bg-opacity));
+}
+
+.tab-border {
+  border: 1px solid gray !important;
+}
+
+.custom-tab .bg-white {
+  background-color: white !important;
+}
+
+.custom-tab .bg-\[\#DEE9EF\] {
+  background-color: #DEE9EF !important;
+}
+
+/* Custom select styles */
+.custom-select {
+  appearance: none;
+  /* Removes the default styles in some browsers */
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  position: relative;
+}
+
+.custom-select:focus {
+  border-color: #007bff;
+  /* Change focus color if required */
+}
+
+/* This is for the arrow icon of the select box, you can use SVG or any other method */
+.custom-select:after {
+  content: "\25BC";
+  /* Unicode downward triangle */
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  /* This makes sure clicks on the arrow don't do anything */
+}
+
+.MuiTabs-flexContainer {
+  justify-content: space-between;
+}
+
+.ant-btn-primary {
+  background-color: #36ABD1;
+  /* This is Ant Design's default primary color */
+  border-color: #36ABD1;
+
+}
+
+.ant-btn-primary:hover {
+  background-color: #3690ae;
+  /* This is Ant Design's default primary color */
+  border-color: #3690ae;
+
+}
+
+.text-black {
+  color: black !important;
+}
+
+.login-form-container {
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  z-index: 1000;
+}
+
+.search-result {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.search-result:hover {
+  background-color: #f0f0f0;
+}
+
+.selected {
+  background-color: #0070f3;
+  /* Highlight the selected item */
+  color: #fff;
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  height: 40px;
+  /* adjust this based on your requirement */
+  align-items: center;
+}
+
+/* For the arrow icon of the select box */
+.ant-select-arrow {
+  top: 85% !important;
+  transform: translateY(-50%);
+}
+
+/* If you want the DatePicker to have the same height as well */
+.ant-picker {
+  height: 40px;
+}
+
+.ant-picker-input>input {
+  height: 40px;
+}
+
+/* Base Styles */
+/* .container {
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar {
+  width: 20%;
+  background-color: #20414F;
+  min-width: 200px;
+  overflow-x: hidden;
+}
+
+.main-content {
+  width: 80%;
+  background-color: #DEE9EF;
+} */
+
+/* Responsive Styles */
+.navbar{
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+@media only screen and (max-width: 768px) {
+  .container1 {
+    flex-direction: column;
+  }
+
+  .img-login {
+    display: none;
+    width: 200%;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-height: 30vh;
+    overflow-y: auto;
+    /* reduce height for mobile screens */
+  }
+
+  .main-content {
+    width: 100%;
+  }
+
+  .btn-new-vote {
+    margin-top: -150px;
+    /* Adjust this value according to how much higher you want the button to be. */
+  }
+
+  .vote-box-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .vote-box {
+    flex: 1 1 calc(50% - 10px);
+    /* Taking 10px for some spacing */
+    max-width: 150px;
+    /* Or any width you want for maximum size */
+    margin: 5px;
+    /* Spacing between the boxes */
+  }
+
+  @media screen and (max-width: 768px) {
+    .vote-box {
+      flex: 1 1 100%;
+    }
+  }
+
+  @media (max-width: 769px) {
+    .flex.h-screen.bg-white {
+      flex-direction: column;
+    }
+
+    .w24 {
+      width: 100%;
+    }
+
+    .w14 {
+      width: 100%;
+      display: none;
+    }
+
+    .register-form-container {
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+
+    .text-5xl,
+    .text-3xl {
+      text-align: center;
+      padding-left: 0;
+    }
+  }
+  
+}

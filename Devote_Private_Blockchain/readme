@@ -1,0 +1,33 @@
+Public address of the key:   0x560fcF117dE71F45A917dE4e5547D2E23418e06a จะสร้างใหม่ทุกครั้งที่สร้างaccount อันนี้ของnode1
+Public address of the key:   0x8c889EF8E96cE778a350CF11f0A0faa18B7DCF62 อันนี้ของnode2
+bootnode -> enode://c5805208cba1d782943828f488f09b58528d7688da5fdcb6aa48dd1392bac9517f902989a2c7a5ce5eb0856313d7f72186519bf048385a05024010190dbf42b3@127.0.0.1:0?discport=30305
+
+ถ้าต้องการสร้างblockchainใหม่
+install geth and tool v1.9.3
+mkdir node1 node2 bnode
+
+cd node1
+geth --datadir "./data" account new สร้างaccount 
+geth --datadir ./data init ../devotepoa.json initด้วยjson ต้องgenจากpuppeth
+รัน geth --networkid 1337 --datadir "./data" --bootnodes enode://c5805208cba1d782943828f488f09b58528d7688da5fdcb6aa48dd1392bac9517f902989a2c7a5ce5eb0856313d7f72186519bf048385a05024010190dbf42b3@127.0.0.1:30301 --port 30303 --ipcdisable --syncmode full --rpc --allow-insecure-unlock --rpccorsdomain "*" --rpcport 8545 --unlock 0x560fcF117dE71F45A917dE4e5547D2E23418e06a --password password.txt --mine console
+
+
+cd node2
+geth --datadir "./data" init account new
+geth --datadir ./data init ../devotepoa.json
+รัน geth --networkid 1337 --datadir "./data" --bootnodes enode://c5805208cba1d782943828f488f09b58528d7688da5fdcb6aa48dd1392bac9517f902989a2c7a5ce5eb0856313d7f72186519bf048385a05024010190dbf42b3@127.0.0.1:30301 --port 30304 --ipcdisable --syncmode full --rpc --allow-insecure-unlock --rpccorsdomain "*" --rpcport 8546 --unlock 0x8c889EF8E96cE778a350CF11f0A0faa18B7DCF62 --password password.txt  console
+
+cd bnode
+bootnode -genkey boot.key สร้างboot.key
+รัน bootnode -nodekey "./boot.key" -verbosity 7 -addr "127.0.0.1:30301" 
+
+eth.getTransactionReceipt("0x3974b1c659243c10965664e04f52abe9776000afcd05ef71f64511cd2a214bbb") //ไว้ดูtransaction ลองใช้remix ทดสอบ deploy contract เปลี่ยนเลขtransaction hashด้านในวงเล็บ
+
+ถ้าจะรันเฉยๆ
+ลง geth and tool 1.9.3
+cd node1
+geth --networkid 1337 --datadir "./data" --bootnodes enode://c5805208cba1d782943828f488f09b58528d7688da5fdcb6aa48dd1392bac9517f902989a2c7a5ce5eb0856313d7f72186519bf048385a05024010190dbf42b3@127.0.0.1:30301 --port 30303 --targetgaslimit "120000000000" --ipcdisable --syncmode full --rpc --allow-insecure-unlock --rpccorsdomain "*" --rpcport 8545 --unlock 0x560fcF117dE71F45A917dE4e5547D2E23418e06a --password password.txt --mine console
+cd node2
+geth --networkid 1337 --datadir "./data" --bootnodes enode://c5805208cba1d782943828f488f09b58528d7688da5fdcb6aa48dd1392bac9517f902989a2c7a5ce5eb0856313d7f72186519bf048385a05024010190dbf42b3@127.0.0.1:30301 --port 30304 --targetgaslimit "120000000000" --ipcdisable --syncmode full --rpc --allow-insecure-unlock --rpccorsdomain "*" --rpcport 8546 --unlock 0x8c889EF8E96cE778a350CF11f0A0faa18B7DCF62 --password password.txt  console
+cd bnode
+bootnode -nodekey "./boot.key" -verbosity 7 -addr "127.0.0.1:30301"

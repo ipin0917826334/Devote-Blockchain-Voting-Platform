@@ -14,6 +14,7 @@
 
 - เปิด Vscode และเปิดโฟลเดอร์ของโปรเจค (Project Folder)
 - เปิด Command Line Interface (CLI) หรือ Terminal ภายใน Vscode
+- แก้ไขไฟล์ docker-compose.yaml ตรง devote_backend ใส่ Config Mail Server (SMTP) ใน environment
 
 ### สร้าง Docker Image สำหรับ Backend:
 - ใน CLI พิมพ์ `cd backend/truffle`
